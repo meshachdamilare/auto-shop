@@ -1,20 +1,19 @@
 package shops
 
-type ProductInterface interface {
-	GetStruct() interface{}
-	DisplayProductStatus() (string, bool)
+type ProductItem interface {
 	GetName() string
 	GetID() string
-	GetQuantity() float64
+	GetQuantity() int
 	GetPrice() float64
+	SetQuantity(int)
 	GetBrand() string
 	GetModel() string
 	GetColor() string
-	GetYearOfManufacture() int64
-	SetQuantityIn(quantity float64)
-	SetQuantityOut(quantity float64)
+	GetYearOfManufacture() int
+	DisplayProduct() any
+	DisplayProductStatus()
 }
 
 type Product struct {
-	Product ProductInterface
+	ProductItem
 }
