@@ -6,18 +6,13 @@ import (
 	"log"
 )
 
-type StoreItem interface {
-	AddItem()
-	ListAllProduct()
-	SellItem()
-	ListSoldItem()
-}
-
+// store struct
 type Store struct {
 	Instock  map[string]ProductItem
 	OutStock map[string]ProductItem
 }
 
+// Initialiazing a new store
 func NewStore() *Store {
 	return &Store{
 		Instock:  make(map[string]ProductItem),
@@ -25,6 +20,7 @@ func NewStore() *Store {
 	}
 }
 
+// List products with quantity greater than zero
 func (s *Store) AvailableProduct() {
 	fmt.Println("All Available Products for sales")
 	var allProduct []string
@@ -41,6 +37,7 @@ func (s *Store) AvailableProduct() {
 
 }
 
+// List sold products
 func (s *Store) ListSoldItem() {
 	fmt.Println("List of all sold Item")
 	var allSoldProduct []any
@@ -57,13 +54,15 @@ func (s *Store) ListSoldItem() {
 	fmt.Println("Total sale", total_price)
 }
 
+// Adds product to the store
 func (s *Store) AddItem(c ProductItem) {
 	id := c.GetID()
 	if _, ok := s.Instock[id]; !ok {
-		s.Instock[id] = Product{ProductItem: c}
+		s.Instock[id] = c
 	}
 }
 
+// Sells product if available in the store base on the quantity specified
 func (s *Store) SellItem(c ProductItem, quantity int) {
 	id := c.GetID()
 
