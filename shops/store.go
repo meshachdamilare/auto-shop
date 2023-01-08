@@ -28,9 +28,9 @@ func NewStore() *Store {
 func (s *Store) AvailableProduct() {
 	fmt.Println("All Available Products for sales")
 	var allProduct []string
-	for _, v := range s.Instock {
-		if v.GetQuantity() > 0 {
-			jsonResp, err := json.MarshalIndent(v.DisplayProduct(), "", "\t")
+	for _, item := range s.Instock {
+		if item.GetQuantity() > 0 {
+			jsonResp, err := json.MarshalIndent(item.DisplayProduct(), "", "\t")
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -41,27 +41,45 @@ func (s *Store) AvailableProduct() {
 
 }
 
+func (s *Store) ListSoldItem() {
+	fmt.Println("List of all sold Item")
+	var allSoldProduct []any
+	total_price := 0.0
+	for _, item := range s.OutStock {
+		total_price += item.GetPrice() * float64(item.GetQuantity())
+		jsonResp, err := json.MarshalIndent(item.DisplayProduct(), "", "\t")
+		if err != nil {
+			log.Fatalln(err)
+		}
+		allSoldProduct = append(allSoldProduct, string(jsonResp))
+	}
+	fmt.Println(allSoldProduct)
+	fmt.Println("Total sale", total_price)
+}
+
 func (s *Store) AddItem(c ProductItem) {
 	id := c.GetID()
 	if _, ok := s.Instock[id]; !ok {
 		s.Instock[id] = Product{ProductItem: c}
 	}
-
-	//s.Instock = append(s.Instock, &Product{ProductItem: c})
 }
 
 func (s *Store) SellItem(c ProductItem, quantity int) {
 	id := c.GetID()
+
 	availQuantity := c.GetQuantity()
 	if quantity > 0 && availQuantity > 0 {
 		if item, ok := s.Instock[id]; ok {
-			item2 := item
 			if availQuantity >= quantity {
 				nQ := availQuantity - quantity
-				item.SetQuantity(nQ)
-				s.Instock[id] = item
-				item2.SetQuantity(quantity)
-				s.OutStock[id] = item2
+				if nQ == 0 {
+					item.SetQuantity(0)
+					s.Instock[id] = item
+
+				} else {
+					item.SetQuantity(nQ)
+					s.Instock[id] = item
+				}
 			} else {
 				fmt.Println("Available quantity not up the quantity demanded: ", quantity)
 				return
@@ -74,5 +92,9 @@ func (s *Store) SellItem(c ProductItem, quantity int) {
 		fmt.Println("Not enought quantity for sale")
 		return
 	}
+	for k, v := range s.Instock {
+		s.OutStock[k] = v
+	}
+	s.OutStock[id].SetQuantity(quantity)
 
 }
