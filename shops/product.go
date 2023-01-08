@@ -1,5 +1,6 @@
 package shops
 
+// Product interface: any product that has all these methods implement this interface
 type ProductItem interface {
 	GetName() string
 	GetID() string
@@ -12,8 +13,4 @@ type ProductItem interface {
 	GetYearOfManufacture() int
 	DisplayProduct() any
 	DisplayProductStatus()
-}
-
-type Product struct {
-	ProductItem
 }
