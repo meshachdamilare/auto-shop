@@ -25,6 +25,7 @@ func main() {
 
 	// sell item
 	store.SellItem(car1, 1)
+	store.SellItem(car2, 4)
 	//store.SellItem(car2, 5)
 
 	// testing
@@ -32,8 +33,8 @@ func main() {
 	fmt.Println()
 
 	// list all sold item
-	// store.ListSoldItem()
-	// fmt.Println()
+	store.ListSoldItem()
+	fmt.Println()
 	// store.ListAllProduct()
 
 }
