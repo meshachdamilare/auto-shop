@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/Christomesh/auto-shop/shops"
+	"github.com/meshachdamilare/auto-shop/shops"
 )
 
 func main() {
@@ -15,25 +15,25 @@ func main() {
 	store := shops.NewStore()
 
 	//  adding item
-	store.AddItem(car1)
-	store.AddItem(car2)
-	store.AddItem(car3)
+	store.AddProduct(car1)
+	store.AddProduct(car2)
+	store.AddProduct(car3)
 
 	// listing all available products in the store
-	store.AvailableProduct()
+	store.ListAvailableProducts()
 	fmt.Println()
 
 	// sell item
-	store.SellItem(car1, 1)
-	store.SellItem(car2, 4)
-	store.SellItem(car3, 5)
+	store.SellProduct(car1, 1)
+	store.SellProduct(car2, 4)
+	store.SellProduct(car3, 5)
 
 	// list all sold item
-	store.ListSoldItem()
+	store.ListSoldProduct()
 	fmt.Println()
 
 	// listing all available products in the store
-	store.AvailableProduct()
+	store.ListAvailableProducts()
 	fmt.Println()
 
 }
