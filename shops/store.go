@@ -21,7 +21,7 @@ func NewStore() *Store {
 }
 
 // List products with quantity greater than zero
-func (s *Store) AvailableProduct() {
+func (s *Store) ListAvailableProducts() {
 	fmt.Println("All Available Products for sales")
 	var allProduct []string
 	for _, item := range s.Instock {
@@ -38,7 +38,7 @@ func (s *Store) AvailableProduct() {
 }
 
 // List sold products
-func (s *Store) ListSoldItem() {
+func (s *Store) ListSoldProduct() {
 	fmt.Println("List of all sold Item")
 	var allSoldProduct []any
 	total_price := 0.0
@@ -55,7 +55,7 @@ func (s *Store) ListSoldItem() {
 }
 
 // Adds product to the store
-func (s *Store) AddItem(c ProductItem) {
+func (s *Store) AddProduct(c ProductItem) {
 	id := c.GetID()
 	if _, ok := s.Instock[id]; !ok {
 		s.Instock[id] = c
@@ -63,7 +63,7 @@ func (s *Store) AddItem(c ProductItem) {
 }
 
 // Sells product if available in the store base on the quantity specified
-func (s *Store) SellItem(c ProductItem, quantity int) {
+func (s *Store) SellProduct(c ProductItem, quantity int) {
 	id := c.GetID()
 
 	availQuantity := c.GetQuantity()
